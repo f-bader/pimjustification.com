@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="An Entra ID PIM justification for every occasion. Choose your sarcasm level, copy, and get back to work.">
+    <title>PIM Justification — A reason for access.</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <div class="page">
+      <header class="masthead">
+        <a class="wordmark" href="./" aria-label="PIM Justification home"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0"/><path d="M12 14v3"/></svg><span>PIM<span class="wordmark-light"> / justification</span></span></a>
+        <span class="masthead-note">A reason for the record.</span>
+      </header>
+
+      <main>
+        <section class="intro" aria-labelledby="title">
+          <p class="eyebrow">ENTRA ID · PRIVILEGED IDENTITY MANAGEMENT</p>
+          <h1 id="title">A reason for access<span class="accent">.</span></h1>
+          <p class="intro-text">You need access. The box needs a reason <span class="accent">-</span> Let’s make everyone happy.</p>
+        </section>
+
+        <noscript><p class="notice">Enable JavaScript to choose and copy a justification. Everything runs in your browser.</p></noscript>
+
+        <section id="generator" class="generator" aria-label="Justification generator" hidden>
+          <div class="sarcasm-heading">
+            <label for="sarcasm">Sarcasm level</label>
+            <span class="level-readout"><span id="level-number">0</span><span class="level-divider">/ 5</span><span id="level-label" class="level-label">Off</span></span>
+          </div>
+          <input id="sarcasm" type="range" min="0" max="5" step="1" value="0" aria-valuetext="0 of 5: Off" aria-describedby="level-hint">
+          <div class="scale-labels" aria-hidden="true"><span>STRICTLY BUSINESS</span><span>CAREER LIMITING</span></div>
+          <p id="level-hint" class="level-hint">Perfectly reasonable. Suspiciously professional.</p>
+
+          <div class="justification-sheet">
+            <div class="sheet-heading"><span>YOUR JUSTIFICATION</span><span class="sheet-mark" aria-hidden="true">↳</span></div>
+            <p id="justification" class="justification" tabindex="0" aria-live="polite" aria-atomic="true"></p>
+            <div class="actions">
+              <button id="copy" class="button button-primary" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M15 8V3H3v13h5"/></svg><span id="copy-label">Copy justification</span></button>
+              <button id="another" class="button button-secondary" type="button">Another <span aria-hidden="true">↗</span></button>
+            </div>
+          </div>
+          <p id="status" class="status" role="status" aria-live="polite" aria-atomic="true"></p>
+          <p class="collection-note">600 reasons. Six levels of restraint.</p>
+        </section>
+      </main>
+
+      <footer><span>Just enough justification.</span><span>This is a joke. Not affiliated with Microsoft.</span></footer>
+    </div>
+  </body>
+</html>
