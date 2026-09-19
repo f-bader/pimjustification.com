@@ -1,0 +1,8 @@
+name = "pim-justification-api"
+main = "src/worker.js"
+compatibility_date = "2026-09-19"
+workers_dev = false
+
+[[routes]]
+pattern = "api.pimjustification.com"
+custom_domain = true

@@ -21,6 +21,37 @@ Open http://127.0.0.1:4173. Use a web server rather than opening the HTML file d
 - Edit `site/justifications.js` to change content. Keep 100 unique, complete, paste-ready reasons in each of its six arrays: Off, Subtle, Dry, Pointed, Heavy, Fully sarcastic. Level 0 is professional; humor above it stays workplace-safe.
 - Layout and appearance live in `site/index.html` and `site/styles.css`; behavior lives in `site/app.js` and `site/shuffle.js`.
 
+## API
+
+The public API is served separately at `https://api.pimjustification.com`. It returns a single randomized justification and does not authenticate to Microsoft Entra ID or authorize access: the optional role is caller-supplied metadata used only to choose a collection.
+
+```sh
+curl 'https://api.pimjustification.com/v1/justification?role=Global%20Admin&sarcasmLevel=0'
+curl 'https://api.pimjustification.com/v1/justification?role=62e90394-69f5-4237-9190-012177145e10&sarcasmLevel=3'
+```
+
+`GET /v1/justification` accepts these optional query parameters:
+
+- `role`: An official Microsoft Entra built-in role name, supported alias, or role template ID. Matching ignores case and repeated whitespace. Omit it for a general justification.
+- `sarcasmLevel`: An integer from `0` (Off/professional, the default) through `5` (Fully sarcastic).
+
+The response contains `justification`, `sarcasmLevel`, `sarcasmLabel`, normalized `role` metadata (or `null`), and `collection` (`role` or `general`). The API gives the 13 roles below their own 100-reason collection at every tone; recognized built-in roles outside that list fall back to the general collection. Unknown roles, blank/repeated parameters, and invalid tone values return `400` JSON errors. `GET /v1/roles` lists the complete recognized catalog; `GET /openapi.json` is the live OpenAPI 3.1 document. The API is public, responds to browser CORS preflight, and deliberately sends `Cache-Control: no-store` for randomized justifications.
+
+Tailored roles: Global Administrator (`Global Admin`), Security Administrator (`Security Admin`), Global Reader, Intune Administrator (`Intune Admin`), Privileged Role Administrator, Conditional Access Administrator, Authentication Administrator, Privileged Authentication Administrator, User Administrator, Groups Administrator, Application Administrator, Cloud Application Administrator, and Identity Governance Administrator.
+
+The role catalog in `api/src/roles.js` is a reviewed 2026-09-19 snapshot of [Microsoft's built-in Entra roles reference](https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference). When Microsoft changes that catalog, update the snapshot and its review date, then adjust the catalog test deliberately. Tailored text is maintained in `api/src/role-justifications.js` as capability-specific subjects combined with authored tone frames, yielding 100 unique reasons for each role/tone pair.
+
+### API development and deployment
+
+The Worker has no runtime dependencies. Use Node 22 or newer for tests, and Wrangler for local Worker emulation:
+
+```sh
+node --test
+npx wrangler dev --config api/wrangler.toml --local
+```
+
+Production uses the `api.pimjustification.com` Cloudflare Worker Custom Domain. Before the first deployment, add `pimjustification.com` as an active Cloudflare zone and delegate its nameservers; Cloudflare then provisions the API hostname and certificate from `api/wrangler.toml`. Add a least-privilege Workers/zone edit token as the GitHub `CLOUDFLARE_API_TOKEN` secret and its account identifier as `CLOUDFLARE_ACCOUNT_ID`. The API workflow runs tests on pull requests and deploys from `main`; it does not alter the existing GitHub Pages workflow or the static site.
+
 ## Checks
 
 Use Node.js 22 or newer; no package installation is needed:
