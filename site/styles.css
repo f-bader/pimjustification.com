@@ -58,6 +58,23 @@ input[type="range"] { display: block; width: 100%; height: 44px; margin: 7px 0 0
 .notice { padding: 20px; border: 1px solid var(--line); line-height: 1.6; }
 footer { display: flex; justify-content: space-between; gap: 24px; border-top: 1px solid var(--line); padding: 23px 0 29px; color: var(--muted); font-size: 11px; line-height: 1.8; }
 footer span:last-child { text-align: right; }
+footer a, .docs a { color: var(--accent); text-underline-offset: 3px; }
+.footer-links { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 0 16px; }
+.docs { max-width: 760px; margin-top: 64px; }
+.docs h1 { font-size: clamp(42px, 6vw, 62px); }
+.docs-section { margin-top: 46px; }
+.docs-section h2 { font-size: 18px; letter-spacing: -.3px; margin: 0 0 17px; }
+.docs-section p { color: var(--muted); font-size: 14px; line-height: 1.7; margin: 17px 0 0; }
+.endpoint { display: flex; align-items: baseline; gap: 12px; overflow-wrap: anywhere; padding: 16px 17px; border: 1px solid var(--line); border-left: 3px solid var(--accent); background: var(--surface); }
+.method { color: var(--accent); font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", Consolas, monospace; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+code, pre { font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", Consolas, monospace; }
+code { font-size: .9em; }
+pre { overflow-x: auto; margin: 14px 0 0; padding: 17px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 12px; line-height: 1.7; white-space: pre-wrap; overflow-wrap: anywhere; }
+.docs-table { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.55; }
+.docs-table th, .docs-table td { padding: 13px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.docs-table thead th { color: var(--muted); font-family: ui-monospace, "Cascadia Code", "Segoe UI Mono", Consolas, monospace; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+.docs-table tbody th { font-weight: 600; white-space: nowrap; }
+.docs-links p { margin-top: 10px; }
 @media (prefers-color-scheme: dark) {
   :root { --background: #191e1c; --surface: #202724; --text: #e9ece4; --muted: #a6b1a8; --line: #414b44; --accent: #95cfb1; --on-accent: #162c22; --soft-accent: #2c3d33; }
 }
@@ -75,7 +92,10 @@ footer span:last-child { text-align: right; }
   .actions { gap: 8px; }
   .button { padding: 11px 12px; font-size: 12px; }
   footer { flex-direction: column; gap: 8px; }
-  footer span:last-child { text-align: left; }
+  footer span:last-child, .footer-links { text-align: left; justify-content: flex-start; }
+  .footer-links { gap: 0 12px; }
+  .docs { margin-top: 44px; }
+  .docs-table { display: block; overflow-x: auto; }
 }
 @media (max-width: 350px) {
   .page { padding: 0 16px; }

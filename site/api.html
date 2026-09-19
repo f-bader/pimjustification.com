@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="description" content="API documentation for the PIM Justification generator.">
+    <title>PIM Justification API — Documentation</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <div class="page">
+      <header class="masthead">
+        <a class="wordmark" href="./" aria-label="PIM Justification home"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0"/><path d="M12 14v3"/></svg><span>PIM<span class="wordmark-light"> / justification</span></span></a>
+        <span class="masthead-note">For the programmatic record.</span>
+      </header>
+
+      <main class="docs" aria-labelledby="title">
+        <section class="intro">
+          <p class="eyebrow">API · DEVELOPER REFERENCE</p>
+          <h1 id="title">A reason, on request<span class="accent">.</span></h1>
+          <p class="intro-text">A small public API for getting one paste-ready Entra ID PIM justification at a time.</p>
+        </section>
+
+        <section class="docs-section" aria-labelledby="quick-start">
+          <h2 id="quick-start">Quick start</h2>
+          <div class="endpoint"><span class="method">GET</span><code>https://api.pimjustification.com/v1/justification</code></div>
+          <pre><code>curl 'https://api.pimjustification.com/v1/justification?role=Global%20Admin&amp;sarcasmLevel=0'</code></pre>
+          <p>The API is public and does not authenticate to Entra ID. The optional role is caller-supplied metadata used to choose a more relevant collection.</p>
+        </section>
+
+        <section class="docs-section" aria-labelledby="parameters">
+          <h2 id="parameters">Query parameters</h2>
+          <table class="docs-table">
+            <thead><tr><th scope="col">Parameter</th><th scope="col">Values</th><th scope="col">Default</th></tr></thead>
+            <tbody>
+              <tr><th scope="row"><code>role</code></th><td>Official role name, supported alias, or template ID. Names are case-insensitive.</td><td>General collection</td></tr>
+              <tr><th scope="row"><code>sarcasmLevel</code></th><td>Integer <code>0</code> through <code>5</code>.</td><td><code>0</code> (Off)</td></tr>
+            </tbody>
+          </table>
+          <p>Examples include <code>Global Admin</code>, <code>Security Admin</code>, <code>Intune Admin</code>, and <code>62e90394-69f5-4237-9190-012177145e10</code>. Recognized roles without tailored text use the general collection.</p>
+        </section>
+
+        <section class="docs-section" aria-labelledby="response">
+          <h2 id="response">Response</h2>
+          <pre><code>{
+  "justification": "Reviewing tenant-wide identity configuration as part of an approved support activity.",
+  "sarcasmLevel": 0,
+  "sarcasmLabel": "Off",
+  "role": {
+    "name": "Global Administrator",
+    "templateId": "62e90394-69f5-4237-9190-012177145e10",
+    "tailored": true
+  },
+  "collection": "role"
+}</code></pre>
+          <p>Randomized responses are sent with <code>Cache-Control: no-store</code>. Invalid role or tone values return a JSON <code>400</code> error.</p>
+        </section>
+
+        <section class="docs-section docs-links" aria-labelledby="more">
+          <h2 id="more">More</h2>
+          <p><a href="https://api.pimjustification.com/v1/roles">Browse the recognized role catalog ↗</a></p>
+          <p><a href="https://api.pimjustification.com/openapi.json">OpenAPI 3.1 document ↗</a></p>
+          <p><a href="./">Back to the justification generator ↗</a></p>
+        </section>
+      </main>
+
+      <footer><span>Just enough justification.</span><span class="footer-links"><a href="./api.html">API docs</a><a href="https://cloudbrothers.info/en/impressum/" target="_blank" rel="noopener noreferrer">Imprint</a><span>This is a joke. Not affiliated with Microsoft.</span></span></footer>
+    </div>
+  </body>
+</html>

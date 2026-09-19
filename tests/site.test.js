@@ -181,13 +181,29 @@ test('only the newest copy attempt can update feedback', async () => {
 test('document keeps scripts, styles and icons local and supplies accessibility hooks', async () => {
   const html = await readFile(new URL('../site/index.html', import.meta.url), 'utf8');
   for (const [, asset] of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
-    assert.ok(asset.startsWith('./'), asset);
-    if (asset !== './') await readFile(new URL(`../site/${asset}`, import.meta.url));
-    assert.equal(new URL(asset, 'https://example.com/project/').origin, 'https://example.com');
+    if (asset.startsWith('./')) {
+      if (asset !== './') await readFile(new URL(`../site/${asset}`, import.meta.url));
+      assert.equal(new URL(asset, 'https://example.com/project/').origin, 'https://example.com');
+    } else {
+      assert.match(asset, /^https:\/\//, asset);
+    }
   }
   assert.match(html, /<noscript>/);
   assert.match(html, /<label for="sarcasm">/);
   assert.match(html, /id="justification"[^>]*aria-live="polite"/);
   assert.match(html, /id="status"[^>]*role="status"/);
   assert.equal((html.match(/id="justification"/g) || []).length, 1);
+  assert.match(html, /href="\.\/api\.html"/);
+  assert.match(html, /href="https:\/\/cloudbrothers\.info\/en\/impressum\/"/);
+});
+
+test('API documentation page is self-contained and links to the live API', async () => {
+  const html = await readFile(new URL('../site/api.html', import.meta.url), 'utf8');
+  assert.match(html, /<title>PIM Justification API/);
+  assert.match(html, /v1\/justification/);
+  assert.match(html, /v1\/roles/);
+  assert.match(html, /openapi\.json/);
+  assert.match(html, /href="\.\/styles\.css"/);
+  assert.match(html, /href="\.\/api\.html"/);
+  assert.match(html, /href="https:\/\/cloudbrothers\.info\/en\/impressum\/"/);
 });
